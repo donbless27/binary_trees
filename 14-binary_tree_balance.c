@@ -43,7 +43,7 @@ int binary_tree_balance(const binary_tree_t *tree)
 	{
 		left = ((int)binary_tree_height_b(tree->left));
 		right = ((int)binary_tree_height_b(tree->right));
-		total = left - right;
+		sum = left - right;
 	}
 	return (sum);
 }
