@@ -1,12 +1,5 @@
 #include "binary_trees.h"
 
-levelorder_queue_t *create_node(binary_tree_t *node);
-void free_queue(levelorder_queue_t *head);
-void push(binary_tree_t *node, levelorder_queue_t *head,
-		levelorder_queue_t **tail);
-void pop(levelorder_queue_t **head);
-int binary_tree_is_complete(const binary_tree_t *tree);
-
 /**
  * create_node - Creates a new levelorder_queue_t node.
  * @node: The binary tree node for the new node to contain
@@ -83,41 +76,41 @@ void pop(levelorder_queue_t **head)
  */
 int binary_tree_is_complete(const binary_tree_t *tree)
 {
-	levelorder_queue_t *tree_head, tree_tail;
+	levelorder_queue_t *head, tail;
 	unsigned char flag = 0;
 
 	if (tree == NULL)
 		return (0);
 
-	tree_head = tree_tail = create_node((binary_tree_t *)tree);
-	if (tree_head == NULL)
+	head = tail = create_node((binary_tree_t *)tree);
+	if (head == NULL)
 		exit(1);
 
-	while (tree_head != NULL)
+	while (head != NULL)
 	{
-		if (tree_head->node->left != NULL)
+		if (head->node->left != NULL)
 		{
 			if (flag == 1)
 			{
-				free_queue(tree_head);
+				free_queue(head);
 				return (0);
 			}
-			push(tree_head->node->left, tree_head, &tree_tail);
+			push(head->node->left, head, &tail);
 		}
 		else
 			flag = 1;
-		if (tree_head->node->right != NULL)
+		if (head->node->right != NULL)
 		{
 			if (flag == 1)
 			{
-				free_queue(tree_head);
+				free_queue(head);
 				return (0);
 			}
-			push(tree_head->node->right, tree_head, &tree_tail);
+			push(head->node->right, head, &tail);
 		}
 		else
 			flag = 1;
-		pop(&tree_head);
+		pop(&head);
 	}
 	return (1);
 }
